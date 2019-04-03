@@ -1,0 +1,20 @@
+{
+  "name": "blades-friend",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "Collaborative Spotify playlist",
+  "author": "Weslley Cavalcante",
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  },
+  "scripts": {
+    "eslint": "eslint --init",
+    "start": "webpack-dev-server --inline --hot --color"
+  },
+  "dependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
