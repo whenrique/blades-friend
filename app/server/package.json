@@ -1,0 +1,21 @@
+{
+  "name": "@blades-friend/server",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "Collaborative Spotify playlist, server config",
+  "author": "Weslley Cavalcante",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "dotenv": "^7.0.0",
+    "nodemon": "^1.18.11"
+  },
+  "scripts": {
+    "server": "nodemon index.js"
+  }
+}
