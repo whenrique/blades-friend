@@ -1,14 +1,12 @@
 const express = require('express')
 const app = express()
-const axios = require('axios')
 const dotenv = require('dotenv')
 dotenv.config()
 
 const api = require('./api')
 
 app.get('/', (req, res) => {
-  console.log(req)
-
+  console.log(req.query)
   return res.send('Esta é a home!')
 })
 

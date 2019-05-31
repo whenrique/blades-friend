@@ -6,27 +6,26 @@ const request = require('request')
 const dotenv = require('dotenv')
 dotenv.config()
 
-var generateRandomString = function(length) {
-  var text = ''
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+const generateState = (length) => {
+  const key = process.env.CLIENT_ID + process.env.CLIENT_SECRET
+  let state = ''
 
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  for(let i = 0; i <= length; i++) {
+    state += key.charAt(Math.floor(Math.random() * key.length))
   }
-  return text
-}
 
-var scopes = 'user-read-private user-read-email'
+  return state
+}
 
 router.get('/login', (req, res) => {
   res.redirect('https://accounts.spotify.com/authorize?' +
   querystring.stringify({
-    response_type: 'token',
+    response_type: 'code',
     client_id: process.env.CLIENT_ID,
-    scope: scopes,
+    scope: 'user-read-private user-read-email',
     redirect_uri: `http://localhost:${process.env.PORT ? process.env.PORT : 9000}/`,
-    state: generateRandomString(16),
-    show_dialog: true
+    show_dialog: true,
+    state: generateState(24)
   }))
 })
 
