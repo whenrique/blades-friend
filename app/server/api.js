@@ -23,44 +23,58 @@ router.get('/login', (req, res) => {
     response_type: 'code',
     client_id: process.env.CLIENT_ID,
     scope: 'user-read-private user-read-email',
-    redirect_uri: `http://localhost:${process.env.PORT ? process.env.PORT : 9000}/`,
+    redirect_uri: `http://localhost:${process.env.PORT ? process.env.PORT : 9000}/api/callback`,
     show_dialog: true,
     state: generateState(24)
   }))
 })
 
-// router.get()
+router.get('/callback', (req, res) => {
+  request({
+    method: 'POST',
+    url: 'https://accounts.spotify.com/api/token',
+    form: {
+      code: req.query.code,
+      redirect_uri: `http://localhost:${process.env.PORT ? process.env.PORT : 9000}/api/callback`,
+      grant_type: 'authorization_code',
+    },
+    headers: {
+      'Authorization': `Basic ${(new Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))}`
+    },
+    json: true
+  }, (err, res, body) => {
+    if (err) {
+      console.log(err)
+      return false
+    }
 
-// router.get('/callback', (req, res) => {
-//   // const authOptions = {
-//   //   url: 'https://accounts.spotify.com/api/token',
-//   //   form: {
-//   //     code: req.query.code,
-//   //     redirect_uri: 'http://localhost:9000/api/callback',
-//   //     grant_type: 'authorization_code'
-//   //   },
-//   //   headers: {
-//   //     'Authorization': 'Basic ' + (new Buffer(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))
-//   //   },
-//   //   json: true
-//   // }
+    request({
+      method: 'GET',
+      url: 'https://api.spotify.com/v1/me',
+      headers: {
+        'Authorization': `Bearer ${body.access_token}`
+      },
+      json: true
+    }, (err, resp, body) => {
+      if(err) {
+        console.log(err)
+        return false
+      }
 
-//   // request.post(authOptions, function(error, response, body) {
+      console.log(body)
+    })
 
-//   //   var access_token = body.access_token
-//   //   // refresh_token = body.refresh_token
-
-//   //   var options = {
-//   //     url: 'https://api.spotify.com/v1/me/playlists?limit=50',
-//   //     headers: { 'Authorization': 'Bearer ' + access_token },
-//   //     json: true
-//   //   }
-
-//   //   request.get(options, function(error, response, body) {
-//   //     const pl = body.items.filter(_ => _.owner.id === 'whenrique')
-//   //     console.log(pl)
-//   //   })
-//   // })
-// })
+    request({
+      method: 'GET',
+      url: 'https://api.spotify.com/v1/me/playlists?limit=5',
+      headers: {
+        'Authorization': `Bearer ${body.access_token}`
+      },
+      json: true
+    }, (err, res, body) => {
+      console.log(body)
+    })
+  })
+})
 
 module.exports = router
