@@ -6,9 +6,8 @@
   "description": "Collaborative Spotify playlist, server config",
   "author": "Weslley Cavalcante",
   "dependencies": {
-    "axios": "^0.18.0",
     "express": "^4.16.4",
-    "querystring": "^0.2.0",
+    "query-string": "^6.6.0",
     "request": "^2.88.0"
   },
   "devDependencies": {
