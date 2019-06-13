@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const querystring = require('querystring')
+const querystring = require('query-string')
 const request = require('request')
 
 const dotenv = require('dotenv')
@@ -10,7 +10,7 @@ const generateState = (length) => {
   const key = process.env.CLIENT_ID + process.env.CLIENT_SECRET
   let state = ''
 
-  for(let i = 0; i <= length; i++) {
+  for (let i = 0; i <= length; i++) {
     state += key.charAt(Math.floor(Math.random() * key.length))
   }
 
@@ -29,7 +29,7 @@ router.get('/login', (req, res) => {
   }))
 })
 
-router.get('/callback', (req, res) => {
+router.get('/callback', (req, response) => {
   request({
     method: 'POST',
     url: 'https://accounts.spotify.com/api/token',
@@ -48,32 +48,39 @@ router.get('/callback', (req, res) => {
       return false
     }
 
-    request({
-      method: 'GET',
-      url: 'https://api.spotify.com/v1/me',
-      headers: {
-        'Authorization': `Bearer ${body.access_token}`
-      },
-      json: true
-    }, (err, resp, body) => {
-      if(err) {
-        console.log(err)
-        return false
-      }
+    response.redirect('/?' +
+      querystring.stringify({
+        access_token: body.access_token,
+        refresh_token: body.refresh_token
+      })
+    )
 
-      console.log(body)
-    })
+    // request({
+    //   method: 'GET',
+    //   url: 'https://api.spotify.com/v1/me',
+    //   headers: {
+    //     'Authorization': `Bearer ${body.access_token}`
+    //   },
+    //   json: true
+    // }, (err, resp, body) => {
+    //   if(err) {
+    //     console.log(err)
+    //     return false
+    //   }
 
-    request({
-      method: 'GET',
-      url: 'https://api.spotify.com/v1/me/playlists?limit=5',
-      headers: {
-        'Authorization': `Bearer ${body.access_token}`
-      },
-      json: true
-    }, (err, res, body) => {
-      console.log(body)
-    })
+    //   console.log(body)
+    // })
+
+    // request({
+    //   method: 'GET',
+    //   url: 'https://api.spotify.com/v1/me/playlists?limit=5',
+    //   headers: {
+    //     'Authorization': `Bearer ${body.access_token}`
+    //   },
+    //   json: true
+    // }, (err, res, body) => {
+    //   console.log(body)
+    // })
   })
 })
 
