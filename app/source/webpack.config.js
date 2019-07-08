@@ -31,11 +31,19 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './views/index.html',
+      template: './views/signin.html',
+      filename: 'signin.html',
       meta: {
         charset: 'UTF-8',
         viewport: 'width=device-width, initial-scale=1.0',
-        favicon: 'http://d1ujqdpfgkvqfi.cloudfront.net/favicon-generator/htdocs/favicons/2019-04-07/8a6a78cbb60dc3bc956b891462d29758.ico',
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: './views/signed.html',
+      filename: 'signed.html',
+      meta: {
+        charset: 'UTF-8',
+        viewport: 'width=device-width, initial-scale=1.0',
       }
     }),
     new MiniCssExtractPlugin({
@@ -44,12 +52,15 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['*', '.js', '.html', '.scss']
+    extensions: ['*', '.js', '.html', '.scss'],
+    alias: {
+      style: path.resolve(__dirname, 'styles/')
+    }
   },
-  mode: 'development',
-  devServer: {
+  watch: true,
+  /* devServer: {
     contentBase: './public',
     host: '0.0.0.0',
-    port: 9000
-  }
+    port: 3000
+  } */
 }
