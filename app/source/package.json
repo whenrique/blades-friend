@@ -24,12 +24,16 @@
   },
   "scripts": {
     "eslint": "eslint --init",
-    "start": "webpack-dev-server --inline --hot --color",
-    "build": "webpack"
+    "start": "webpack-dev-server --inline --hot --color --mode development",
+    "build": "webpack --mode production"
   },
   "babel": {
     "presets": [
       "@babel/preset-env"
     ]
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "query-string": "^6.8.1"
   }
 }
