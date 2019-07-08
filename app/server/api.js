@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const querystring = require('query-string')
 const request = require('request')
-
 const dotenv = require('dotenv')
 dotenv.config()
 
@@ -81,6 +80,28 @@ router.get('/callback', (req, response) => {
     // }, (err, res, body) => {
     //   console.log(body)
     // })
+  })
+})
+
+router.post('/user', (req, res) => {
+  console.log(req.body)
+  request({
+    method: 'GET',
+    url: 'https://api.spotify.com/v1/me',
+    headers: {
+      'Authorization': `Bearer ${req.body.access_token}`
+    },
+    json: true
+  }, (err, response, body) => {
+    if (err) {
+      console.log('error')
+      return res.send(err)
+    } else if (body.error) {
+      console.log('body error')
+      return res.send(body.error)
+    }
+    console.log(response)
+    return res.send(response)
   })
 })
 
