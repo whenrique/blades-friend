@@ -1,4 +1,4 @@
-n/* eslint-disable no-console */
+/* eslint-disable no-console */
 import 'style/main.scss'
 
 import user from './user'

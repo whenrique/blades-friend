@@ -25,8 +25,8 @@
   },
   "scripts": {
     "eslint": "eslint --init",
-    "start": "webpack --inline --hot --color --mode development",
-    "build": "webpack --mode production"
+    "start": "webpack --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js"
   },
   "babel": {
     "presets": [

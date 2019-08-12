@@ -11,11 +11,11 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.js/,
-        exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader']
-      },
+      // {
+      //   test: /\.js/,
+      //   exclude: /node_modules/,
+      //   use: ['babel-loader', 'eslint-loader']
+      // },
       {
         test: /\.scss$/,
         use: [
@@ -56,11 +56,5 @@ module.exports = {
     alias: {
       style: path.resolve(__dirname, 'styles/')
     }
-  },
-  watch: true,
-  /* devServer: {
-    contentBase: './public',
-    host: '0.0.0.0',
-    port: 3000
-  } */
+  }
 }
