@@ -7,13 +7,15 @@
     <title>Blade's Friend - Spotify Playlist</title>
 </head>
 <body>
-    <div class="signed">
-        <picture class="signed__photo">
-            <img src="{{ data.photo }}" alt="{{ data.name }}" class="signed__photo-profile">
-        </picture>
-        <h1 class="signed__title">Hi, <span class="signed__name signed__highlight">{{ data.name }}</span></h1>
-        <p class="signed__welcome">Could you recommend me a music?</p>
-        <button class="signed__button">YES!</button>
+    <div class="wrapper signed">
+        <div class="signed__user-info">
+            <picture class="signed__photo">
+                <img src="{{ data.photo }}" alt="{{ data.name }}" class="signed__photo-profile">
+            </picture>
+            <h1 class="signed__title">Hi, <span class="signed__name signed__text-highlight text-highlight">{{ data.name }}</span></h1>
+            <p class="signed__welcome">Could you recommend me a music?</p>
+        </div>
+        <button class="signed__button signed__button-accept button__primary">YES!</button>
     </div>
 </body>
 </html>
