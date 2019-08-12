@@ -22,7 +22,7 @@ router.get('/login', (req, res) => {
     response_type: 'code',
     client_id: process.env.CLIENT_ID,
     scope: 'user-read-private user-read-email playlist-read-collaborative',
-    redirect_uri: `http://localhost:${process.env.PORT ? process.env.PORT : 9000}/api/callback`,
+    redirect_uri: `http://${req.headers.host}:${process.env.PORT ? process.env.PORT : 9000}/api/callback`,
     show_dialog: true,
     state: generateState(24)
   }))
@@ -34,7 +34,7 @@ router.get('/callback', (req, response) => {
     url: 'https://accounts.spotify.com/api/token',
     form: {
       code: req.query.code,
-      redirect_uri: `http://localhost:${process.env.PORT ? process.env.PORT : 9000}/api/callback`,
+      redirect_uri: `http://${req.headers.host}:${process.env.PORT ? process.env.PORT : 9000}/api/callback`,
       grant_type: 'authorization_code',
     },
     headers: {
