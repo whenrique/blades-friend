@@ -1,12 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,700&display=swap');
-@import './variables';
-@import './buttons';
-@import './title';
+@import './components/variables';
+@import './components/buttons';
+@import './components/fields';
+@import './components/title';
+@import './components/tracks';
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
+  &::selection {
+    background-color: #000;
+  }
 }
 
 body {
@@ -19,5 +25,23 @@ body {
   }
 }
 
+.text-highlight {
+  color: $secondary;
+  font: {
+    size: 1.5em;
+    weight: 700;
+  }
+}
 
-@import './intro';
+.wrapper {
+  width: 90vw;
+  height: 100vh;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+@import './views/signin';
+@import './views/signed';
