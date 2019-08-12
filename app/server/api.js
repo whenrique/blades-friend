@@ -21,7 +21,7 @@ router.get('/login', (req, res) => {
   querystring.stringify({
     response_type: 'code',
     client_id: process.env.CLIENT_ID,
-    scope: 'user-read-private user-read-email',
+    scope: 'user-read-private user-read-email playlist-read-collaborative',
     redirect_uri: `http://localhost:${process.env.PORT ? process.env.PORT : 9000}/api/callback`,
     show_dialog: true,
     state: generateState(24)
@@ -53,38 +53,10 @@ router.get('/callback', (req, response) => {
         refresh_token: body.refresh_token
       })
     )
-
-    // request({
-    //   method: 'GET',
-    //   url: 'https://api.spotify.com/v1/me',
-    //   headers: {
-    //     'Authorization': `Bearer ${body.access_token}`
-    //   },
-    //   json: true
-    // }, (err, resp, body) => {
-    //   if(err) {
-    //     console.log(err)
-    //     return false
-    //   }
-
-    //   console.log(body)
-    // })
-
-    // request({
-    //   method: 'GET',
-    //   url: 'https://api.spotify.com/v1/me/playlists?limit=5',
-    //   headers: {
-    //     'Authorization': `Bearer ${body.access_token}`
-    //   },
-    //   json: true
-    // }, (err, res, body) => {
-    //   console.log(body)
-    // })
   })
 })
 
 router.post('/user', (req, res) => {
-  console.log(req.body)
   request({
     method: 'GET',
     url: 'https://api.spotify.com/v1/me',
@@ -94,13 +66,50 @@ router.post('/user', (req, res) => {
     json: true
   }, (err, response, body) => {
     if (err) {
-      console.log('error')
+      console.log('error', err)
+      return res.send(err)
+    } else if (body.error) {
+      console.log('body error', body.error)
+      return res.send(body.error)
+    }
+    return res.send(response)
+  })
+})
+
+router.post('/playlist', (req, res) => {
+  request({
+    method: 'GET',
+    url: 'https://api.spotify.com/v1/playlists/0HmKBP4NpwHyFPIGxCsgRn',
+    headers: {
+      'Authorization': `Bearer ${req.body.access_token}`
+    },
+    json: true
+  }, (err, response, body) => {
+    if (err) {
+      console.log('error', err)
       return res.send(err)
     } else if (body.error) {
       console.log('body error')
       return res.send(body.error)
     }
-    console.log(response)
+    return res.send(response)
+  })
+})
+
+router.post('/search', (req, res) => {
+  request({
+    method: 'GET',
+    url: `https://api.spotify.com/v1/search?q=${req.body.query}&type=track`,
+    headers: {
+      'Authorization': `Bearer ${req.body.access_token}`
+    },
+    json: true
+  }, (err, response, body) => {
+    if (err) {
+      console.log('error', err)
+      return res.send(err)
+    }
+
     return res.send(response)
   })
 })
