@@ -1,0 +1,36 @@
+.signed {
+  align-items: center;
+  text-align: center;
+
+  &__photo-profile {
+    border-radius: 50%;
+    max-width: 256px;
+  }
+
+  &__button {
+    margin-top: 25px;
+    width: 270px;
+  }
+
+  &__field {
+    margin-top: 25px;
+    width: 270px;
+  }
+
+  &.search-opened {
+    justify-content: flex-start;
+    .signed__user-info {
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-self: flex-start;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .signed__photo-profile {
+      width: 155px;
+    }
+  }
+}
